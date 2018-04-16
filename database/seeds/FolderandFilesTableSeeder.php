@@ -16,7 +16,7 @@ class FolderandFilesTableSeeder extends Seeder
         \App\Files::truncate();
 
         /**
-         * Pupulating Database for Test
+         * Populating Database for Test
          *
          * $u means user_id (10) => Created on UsesTableSeeder
          * $d means folder_id (*10 =  100)
@@ -27,24 +27,22 @@ class FolderandFilesTableSeeder extends Seeder
         $faker = \Faker\Factory::create();
 
         for ($u = 1; $u <= 10; $u++) {
-            // Seeding Folders
+            // Seeding Folders (10 per User)
             for ($d = 0; $d <= 10; $d++) {
                 \App\Folder::create([
                     'name' => $faker->word,
                     'sub_id' => $d,
                     'user_id' => $u,
                 ]);
-                // Seeding Folders
+                // Seeding Files (10 per Folder)
                 for ($f = 0; $f < 10; $f++) {
                     $filename = $faker->word.'.'.$faker->fileExtension;
                     $hash = md5($filename);
-                    $destination = storage_path().'/app/usr/'.$hash;
-
                     /* In order to have a physical file for download test:
                      * remove the comment bellow and run artisan seed as su
                      * command to run: "sudo php artisan db:seed"
                      */
-                    // fopen($destination,'w');
+                    // fopen(storage_path().'/app/usr/'.$hash,'w');
 
                     \App\Files::create([
                         'name' => $filename,
