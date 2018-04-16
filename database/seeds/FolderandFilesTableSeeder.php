@@ -38,14 +38,13 @@ class FolderandFilesTableSeeder extends Seeder
                 for ($f = 0; $f < 10; $f++) {
                     $filename = $faker->word.'.'.$faker->fileExtension;
                     $hash = md5($filename);
-                    $file = storage_path().'/app/public/fake';
                     $destination = storage_path().'/app/usr/'.$hash;
 
                     /* In order to have a physical file for download test:
                      * remove the comment bellow and run artisan seed as su
                      * command to run: "sudo php artisan db:seed"
                      */
-                    // File::copy($file,$destination);
+                    // fopen($destination,'w');
 
                     \App\Files::create([
                         'name' => $filename,
@@ -53,7 +52,6 @@ class FolderandFilesTableSeeder extends Seeder
                         'user_id' => $u,
                         'size' => $faker->numberBetween(100,1024000),
                         'path' => $hash,
-                        'created_at' => $faker->dateTime,
                     ]);
                 }
             }
